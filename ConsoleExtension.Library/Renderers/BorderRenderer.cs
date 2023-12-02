@@ -1,11 +1,12 @@
 ﻿using ConsoleExtension.Library.Models;
 
 namespace ConsoleExtension.Library.Renderers;
-internal static class BorderRenderer
+public static class BorderRenderer
 {
     /// <summary>
     /// Draws the corners of a border at the size of 'gridsize' starting at position 'startPosition'. 
     /// 'cornersize' indicates how many characters should be used to draw lines from the corners.
+    /// Uses ╔ ═ ╗ ╚ ╝ ║ to build a border.
     /// Exception is thrown if gridSize (X or Y) is less than 2.
     /// Exception is thrown if startPosition (X or Y) is less than 0.
     /// Exception is thrown if cornerSize is less than 0.
@@ -65,7 +66,8 @@ internal static class BorderRenderer
     }
 
     /// <summary>
-    /// Draws a solid border at the size of 'gridSize' starting at 'startPosition' with the color of 'borderColor'
+    /// Draws a solid border at the size of 'gridSize' starting at 'startPosition' with the color of 'borderColor'.
+    /// Uses ╔ ═ ╗ ╚ ╝ ║ to build a border.
     /// Exception is thrown if gridSize (X or Y) is less than 3.
     /// Exception is thrown if startPosition (X or Y) is less than 0.
     /// </summary>
@@ -75,7 +77,6 @@ internal static class BorderRenderer
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static void BorderSolid(Vector2 startPosition, Vector2 gridSize, ConsoleColor borderColor)
     {
-        // ╔ ═ ╗ ╚ ╝ ║ 
         // |
         if (startPosition.X < 0 || startPosition.Y < 0)
             throw new ArgumentOutOfRangeException(nameof(startPosition));
