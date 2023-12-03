@@ -77,7 +77,6 @@ public static class BorderRenderer
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static void BorderSolid(Vector2 startPosition, Vector2 gridSize, ConsoleColor borderColor)
     {
-        // |
         if (startPosition.X < 0 || startPosition.Y < 0)
             throw new ArgumentOutOfRangeException(nameof(startPosition));
         if (gridSize.X < 3 || gridSize.Y < 3)
