@@ -9,6 +9,7 @@ public class MenuContainer : IMenuContainer
 {
     private readonly List<IMenuContainerChild> _children;
     private int _selectedIndex = 0;
+    private Func<ConsoleKeyInfo, IMenuContainer, bool> _actionOnKeyPressed;
 
     public MenuContainer()
     {
@@ -56,6 +57,9 @@ public class MenuContainer : IMenuContainer
         throw new ArgumentException($"No MenuContainerChild with {value} could be found!");
     }
 
+    public void SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed) 
+        => _actionOnKeyPressed = actionOnKeyPressed;
+
     public void AddChild(IMenuContainerChild child) => _children.Add(child);
     public Vector2 AreaNeeded()
     {
@@ -91,18 +95,21 @@ public class MenuContainer : IMenuContainer
         _children.ForEach(child =>
         {
             child.IsSelected = _selectedIndex == index;
-            child.Position = position;
+            child.Position = position.Duplicate();
             child.Render();
             position = NextChildPosition(position, child.AreaNeeded());
             index++;
         });
-
-
-
     }
-    public void RenderSelection()
-    {
 
+    public IMenuContainerChild GetSelectedChild() => _children[SelectedIndex];
+    public void RenderSelection(bool showSelection) 
+        => BorderRenderer.BorderCorner(Position, AreaNeeded(), showSelection ? ConsoleColor.Blue : ConsoleColor.Gray, 1);
+
+    public void PerformAction(ConsoleKeyInfo key)
+    {
+        if (_actionOnKeyPressed?.Invoke(key, this) ?? _children.Any())
+            _children[SelectedIndex].PerformAction(key);
     }
 
     private Vector2 NextChildPosition(Vector2 position, Vector2 areaNeeded)

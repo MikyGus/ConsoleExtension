@@ -5,6 +5,7 @@ using ConsoleExtension.Library.Renderers;
 namespace ConsoleExtension.Library.Menu.Models;
 public class MenuContainerItem<T> : IMenuContainerItem<T>
 {
+    private Func<ConsoleKeyInfo, IMenuContainerItem<T>, bool> _actionOnKeyPressed;
     public bool IsMarked { get; set; }
     public T Value { get; set; }
     public string Title { get; set; }
@@ -19,5 +20,8 @@ public class MenuContainerItem<T> : IMenuContainerItem<T>
 
     public Vector2 AreaNeeded() => new(Title.Length + 2, 1);
     public void Render() => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, ConsoleColor.Gray, ConsoleColor.Blue, IsSelected);
-    public void RenderSelection() => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, ConsoleColor.Gray, ConsoleColor.Blue, IsMarked);
+    public void RenderSelection(bool showSelection) 
+        => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, ConsoleColor.Gray, ConsoleColor.Blue, showSelection);
+    public void SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainerItem<T>,bool> actionOnKeyPressed) => _actionOnKeyPressed = actionOnKeyPressed;
+    public void PerformAction(ConsoleKeyInfo key) => _actionOnKeyPressed?.Invoke(key,this);
 }

@@ -7,6 +7,7 @@ public interface IMenuContainerChild
     Vector2 Position { get; set; }
     bool IsSelected { get; set; }
     void Render();
-    void RenderSelection();
+    void RenderSelection(bool showSelection);
     Vector2 AreaNeeded();
+    void PerformAction(ConsoleKeyInfo key);
 }
