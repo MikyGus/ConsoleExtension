@@ -14,7 +14,7 @@ internal class BorderRendererDemo
         // Content inside the rendered border is NOT overwritten
         Vector2 startPositionCorner = new Vector2(22, 2);
         Vector2 gridSizeCorner = new Vector2(10, 4);
-        int cornerSize = 2;
+        int cornerSize = 1;
         BorderRenderer.BorderCorner(startPositionCorner, gridSizeCorner, ConsoleColor.Red,cornerSize);
     }
 }
