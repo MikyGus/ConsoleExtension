@@ -57,6 +57,15 @@ public class MenuContainer : IMenuContainer
         throw new ArgumentException($"No MenuContainerChild with {value} could be found!");
     }
 
+    public void MarkByValue<T>(T value)
+    {
+        foreach (var child in Children)
+        {
+            if (child is IMenuContainerItem<T> c)
+                c.IsMarked = c.Value.Equals(value);
+        }
+    }
+
     public void SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed) 
         => _actionOnKeyPressed = actionOnKeyPressed;
 

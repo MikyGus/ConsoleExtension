@@ -12,6 +12,7 @@ public interface IMenuContainer : IMenuContainerChild
     Vector2 OffsetBetweenChildren { get; }
     int SelectedIndex { get; set; }
     void SelectByValue<T>(T value);
+    void MarkByValue<T>(T value);
     void SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed);
     IMenuContainerChild GetSelectedChild();
     void AddChild(IMenuContainerChild child);

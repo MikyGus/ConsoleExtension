@@ -31,6 +31,7 @@ public interface IMenuBuilder
     /// <param name="value">Value of MenuChildItem to select</param>
     /// <returns>IMenuBuilder</returns>
     IMenuBuilder SelectByValue<T>(T value);
+    IMenuBuilder MarkByValue<T>(T value);
     IMenuBuilder SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed);
     IMenuContainer Build();
 }

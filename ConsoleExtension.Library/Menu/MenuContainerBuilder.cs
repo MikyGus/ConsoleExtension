@@ -40,6 +40,12 @@ public class MenuContainerBuilder : IMenuBuilder
         return this;
     }
 
+    public IMenuBuilder MarkByValue<T>(T value)
+    {
+        _container.MarkByValue(value);
+        return this;
+    }
+
     public IMenuBuilder SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed)
     {
         _container.SetActionOnKeyPressed(actionOnKeyPressed);

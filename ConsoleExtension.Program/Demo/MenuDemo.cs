@@ -8,11 +8,16 @@ using ConsoleExtension.Library.Models;
 namespace ConsoleExtension.Program.Demo;
 internal static class MenuDemo
 {
+    private static class Settings
+    {
+        public static int NumberOfPlayers => 3;
+    }
+
     public static void Run()
     {
-        // menuNumberOfPlayers is a subsection of the menu (below).
-        // Added as a child to "Players"
-        IMenuContainer menuNumberOfPlayers = new MenuContainerBuilder()
+    // menuNumberOfPlayers is a subsection of the menu (below).
+    // Added as a child to "Players"
+    IMenuContainer menuNumberOfPlayers = new MenuContainerBuilder()
             // Adds a Title to the node
             .Title("Number of players")
             // Sets the orientation of this nodes own children
@@ -27,6 +32,13 @@ internal static class MenuDemo
             //      ManuContainerItem: Func<ConsoleKeyInfo, IMenuContainerItem<T>, bool>
             // The bool indicates if it should continue down the tree hierarchy to the next selected child
             .SetActionOnKeyPressed(PerformAction.MoveSelectionLeftOrRight)
+            // Selects the child MenuContainerItem that matches provided value
+            // Both T and value must be equal
+            .SelectByValue(Settings.NumberOfPlayers) // Default - Selects the first child in the collection
+            // Marks the child MenuContainerItem that matches provided value
+            // Both T and value must be equal
+            // If no match is found, no item is marked.
+            .MarkByValue(Settings.NumberOfPlayers) // Default - No item marked
             // Builds it to a MenuContainer
             .Build();
 

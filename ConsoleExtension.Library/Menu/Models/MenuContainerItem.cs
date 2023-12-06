@@ -1,4 +1,4 @@
-﻿using ConsoleExtension.Library.Menu.Abstract;
+﻿using ConsoleExtension.Library .Menu.Abstract;
 using ConsoleExtension.Library.Models;
 using ConsoleExtension.Library.Renderers;
 
@@ -19,9 +19,11 @@ public class MenuContainerItem<T> : IMenuContainerItem<T>
     }
 
     public Vector2 AreaNeeded() => new(Title.Length + 2, 1);
-    public void Render() => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, ConsoleColor.Gray, ConsoleColor.Blue, IsSelected);
+    public void Render() 
+        => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, IsMarked ? ConsoleColor.DarkGray : ConsoleColor.Gray, ConsoleColor.Blue, IsSelected);
     public void RenderSelection(bool showSelection) 
-        => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, ConsoleColor.Gray, ConsoleColor.Blue, showSelection);
+        => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, IsMarked ? ConsoleColor.DarkGray : ConsoleColor.Gray, ConsoleColor.Blue, showSelection);
+
     public void SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainerItem<T>,bool> actionOnKeyPressed) => _actionOnKeyPressed = actionOnKeyPressed;
     public void PerformAction(ConsoleKeyInfo key) => _actionOnKeyPressed?.Invoke(key,this);
 }
