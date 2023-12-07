@@ -1,6 +1,11 @@
 # Console Extension
+**Extension contains:**
+* Menu, designed for displaying a simple menu.
+* Print a border around an area.
+* Print text with specific color at a specific position.
 
-## Class diagram overview
+## Menu
+### Class diagram overview
 ```mermaid
 classDiagram
 direction RL
