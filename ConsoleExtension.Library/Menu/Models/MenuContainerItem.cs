@@ -6,6 +6,7 @@ namespace ConsoleExtension.Library.Menu.Models;
 public class MenuContainerItem<T> : IMenuContainerItem<T>
 {
     private Func<ConsoleKeyInfo, IMenuContainerItem<T>, bool> _actionOnKeyPressed;
+    public IMenuContainer Parent { get; set; }
     public bool IsMarked { get; set; }
     public T Value { get; set; }
     public string Title { get; set; }

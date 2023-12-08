@@ -18,7 +18,7 @@ public class MenuContainer : IMenuContainer
         Position = Vector2.ZERO;
     }
     public IEnumerable<IMenuContainerChild> Children => _children;
-
+    public IMenuContainer Parent { get; set; }
     public ContainerChildOrientation OrientationOfChildren { get; set; }
     public Vector2 OffsetBetweenChildren
         => OrientationOfChildren == ContainerChildOrientation.Vertical

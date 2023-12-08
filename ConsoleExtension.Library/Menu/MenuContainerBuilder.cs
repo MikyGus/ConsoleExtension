@@ -14,6 +14,7 @@ public class MenuContainerBuilder : IMenuBuilder
 
     public IMenuBuilder AddChild(IMenuContainerChild item)
     {
+        item.Parent = _container;
         _container.AddChild(item);
         return this;
     }
