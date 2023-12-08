@@ -32,6 +32,7 @@ public interface IMenuBuilder
     /// <returns>IMenuBuilder</returns>
     IMenuBuilder SelectByValue<T>(T value);
     IMenuBuilder MarkByValue<T>(T value);
+    IMenuBuilder SuppressSelection(bool suppressSelection);
     IMenuBuilder SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed);
     IMenuContainer Build();
 }

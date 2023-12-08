@@ -45,10 +45,16 @@ public class MenuContainerBuilder : IMenuBuilder
         _container.MarkByValue(value);
         return this;
     }
+    public IMenuBuilder SuppressSelection(bool suppressSelection)
+    {
+        _container.IsSelectionSuppressed = suppressSelection;
+        return this;
+    }
 
     public IMenuBuilder SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed)
     {
         _container.SetActionOnKeyPressed(actionOnKeyPressed);
         return this;
     }
+
 }

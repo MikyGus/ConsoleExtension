@@ -26,6 +26,7 @@ public class MenuContainer : IMenuContainer
     public string Title { get; set; }
     public Vector2 Position { get; set; }
     public bool IsSelected { get; set; }
+    public bool IsSelectionSuppressed { get; set; }
     public int SelectedIndex
     {
         get => _selectedIndex;
@@ -93,7 +94,7 @@ public class MenuContainer : IMenuContainer
     public void Render()
     {
         var position = Position.Duplicate();
-        if (IsSelected)
+        if (IsSelected && IsSelectionSuppressed == false)
             BorderRenderer.BorderCorner(position, AreaNeeded(), ConsoleColor.Blue, 1);
 
         position += Vector2.RIGHT_DOWN;

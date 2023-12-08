@@ -11,6 +11,7 @@ public class MenuContainerItem<T> : IMenuContainerItem<T>
     public string Title { get; set; }
     public Vector2 Position { get; set; }
     public bool IsSelected { get; set; }
+    public bool IsSelectionSuppressed { get; set; }
 
     public MenuContainerItem(T value)
     {
@@ -20,7 +21,7 @@ public class MenuContainerItem<T> : IMenuContainerItem<T>
 
     public Vector2 AreaNeeded() => new(Title.Length + 2, 1);
     public void Render() 
-        => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, IsMarked ? ConsoleColor.DarkGray : ConsoleColor.Gray, ConsoleColor.Blue, IsSelected);
+        => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, IsMarked ? ConsoleColor.DarkGray : ConsoleColor.Gray, ConsoleColor.Blue, IsSelected && IsSelectionSuppressed == false);
     public void RenderSelection(bool showSelection) 
         => ConsoleWriter.WriteAtPosition(Position, Title, ConsoleColor.Black, IsMarked ? ConsoleColor.DarkGray : ConsoleColor.Gray, ConsoleColor.Blue, showSelection);
 
