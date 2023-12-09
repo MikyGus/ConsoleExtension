@@ -15,5 +15,7 @@ public interface IMenuContainer : IMenuContainerChild
     void MarkByValue<T>(T value);
     void SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed);
     IMenuContainerChild GetSelectedChild();
+    void IncrementMoveSelection();
+    void DecrementMoveSelection();
     void AddChild(IMenuContainerChild child);
 }

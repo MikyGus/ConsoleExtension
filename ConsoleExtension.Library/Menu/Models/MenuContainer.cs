@@ -94,9 +94,6 @@ public class MenuContainer : IMenuContainer
     public void Render()
     {
         var position = Position.Duplicate();
-        if (IsSelected && IsSelectionSuppressed == false)
-            BorderRenderer.BorderCorner(position, AreaNeeded(), ConsoleColor.Blue, 1);
-
         position += Vector2.RIGHT_DOWN;
         ConsoleWriter.WriteAtPosition(position, Title, ConsoleColor.Black, ConsoleColor.Gray);
 
@@ -106,20 +103,76 @@ public class MenuContainer : IMenuContainer
         {
             child.IsSelected = _selectedIndex == index;
             child.Position = position.Duplicate();
-            child.Render();
+            child.Render(); 
             position = NextChildPosition(position, child.AreaNeeded());
             index++;
         });
     }
 
     public IMenuContainerChild GetSelectedChild() => _children[SelectedIndex];
-    public void RenderSelection(bool showSelection) 
-        => BorderRenderer.BorderCorner(Position, AreaNeeded(), showSelection ? ConsoleColor.Blue : ConsoleColor.Gray, 1);
+    public void RenderSelection(bool showSelection)
+    {
+        var selectionColor = (IsSelectionSuppressed ? false : showSelection) ? ConsoleColor.Blue : ConsoleColor.Gray;
+        BorderRenderer.BorderCorner(Position, AreaNeeded(), selectionColor, 1);
+        GetSelectedChild().RenderSelection(showSelection);
+    }
 
     public void PerformAction(ConsoleKeyInfo key)
     {
         if (_actionOnKeyPressed?.Invoke(key, this) ?? _children.Any())
             _children[SelectedIndex].PerformAction(key);
+    }
+
+    public void IncrementMoveSelection()
+    {
+
+        if (_selectedIndex + 1 > _children.Count - 1)
+        {
+            //    if (Parent is not null)
+            //    {
+            //        RenderSelection(false);
+            //        GetSelectedChild()?.RenderSelection(false);
+            //        Parent.IncrementSelection();
+            //    }
+            //    else
+            //    {
+            //        GetSelectedChild()?.RenderSelection(false);
+            //        _selectedIndex = _children.Count - 1;
+            //        GetSelectedChild()?.RenderSelection(true);
+            //    }
+        }
+        else
+        {
+            GetSelectedChild()?.RenderSelection(false);
+            _selectedIndex++;
+            GetSelectedChild()?.RenderSelection(true);
+        }
+
+    }
+
+    public void DecrementMoveSelection()
+    {
+        if (_selectedIndex - 1 < 0)
+        {
+            //    if (Parent is not null)
+            //    {
+            //        RenderSelection(false);
+            //        GetSelectedChild()?.RenderSelection(false);
+            //        Parent.DecrementSelection();
+            //    }
+            //    else
+            //    {
+            //        GetSelectedChild()?.RenderSelection(false);
+            //        _selectedIndex = 0;
+            //        GetSelectedChild()?.RenderSelection(true);
+            //    }
+        }
+        else
+        {
+            GetSelectedChild()?.RenderSelection(false);
+            _selectedIndex--;
+            GetSelectedChild()?.RenderSelection(true);
+        }
     }
 
     private Vector2 NextChildPosition(Vector2 position, Vector2 areaNeeded)

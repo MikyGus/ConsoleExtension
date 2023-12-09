@@ -40,12 +40,14 @@ internal static class MenuLayout
             .AddChild(nameOfPlayers)
             .SuppressSelection(true)
             .SetActionOnKeyPressed(PerformAction.MoveSelectionUpOrDown)
+            //.FallthroughToNextParentChild(true)
             .Build();
 
 
         var menu = new MenuContainerBuilder()
             .Title("Settings")
             .Orientation(ContainerChildOrientation.Vertical)
+            .SuppressSelection(true)
             .AddChild(playersMenu)
             .AddChild(new MenuContainerBuilder()
                 .Orientation(ContainerChildOrientation.Horizontal)
@@ -55,9 +57,12 @@ internal static class MenuLayout
                 .AddChild(new MenuContainerItem<Vector2>(new Vector2(5,5)))
                 .SelectByValue(new Vector2(5,5))
                 .MarkByValue(new Vector2(3,3))
+                .SetActionOnKeyPressed(PerformAction.MoveSelectionUpOrDown)
                 .Build())
             .Build();
+
         menu.Render();
+        menu.RenderSelection(true);
 
         ConsoleKeyInfo keyInput;
         do

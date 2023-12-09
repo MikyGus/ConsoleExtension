@@ -7,16 +7,12 @@ public static class PerformAction
     {
         if (key.Key == ConsoleKey.UpArrow)
         {
-            container.GetSelectedChild().RenderSelection(false);
-            container.SelectedIndex--;
-            container.GetSelectedChild().RenderSelection(true);
+            container.DecrementMoveSelection();
             return false;
         }
         else if (key.Key == ConsoleKey.DownArrow)
         {
-            container.GetSelectedChild().RenderSelection(false);
-            container.SelectedIndex++;
-            container.GetSelectedChild().RenderSelection(true);
+            container.IncrementMoveSelection();
             return false;
         }
         return true;
