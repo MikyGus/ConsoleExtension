@@ -1,11 +1,13 @@
 ﻿using ConsoleExtension.Library.Menu.Abstract;
 using ConsoleExtension.Library.Menu.Fixed;
 using ConsoleExtension.Library.Menu.Models;
+using ConsoleExtension.Library.Menu.PerformAction;
 
 namespace ConsoleExtension.Library.Menu;
 public class MenuContainerBuilder : IMenuBuilder
 {
     private readonly IMenuContainer _container;
+    private bool _haveSetActionToPerform = false;
 
     public MenuContainerBuilder()
     {
@@ -29,7 +31,13 @@ public class MenuContainerBuilder : IMenuBuilder
         return this;
     }
 
-    public IMenuContainer Build() => _container;
+    public IMenuContainer Build()
+    {
+        if (_container.IsSelectionSuppressed == false && _haveSetActionToPerform == false)
+            _container.SetActionOnKeyPressed(ActionToPerform.MoveSelection);
+        return _container;
+    }
+
     public IMenuBuilder SelectByIndex(int index)
     {
         _container.SelectedIndex = index;
@@ -55,6 +63,7 @@ public class MenuContainerBuilder : IMenuBuilder
     public IMenuBuilder SetActionOnKeyPressed(Func<ConsoleKeyInfo, IMenuContainer, bool> actionOnKeyPressed)
     {
         _container.SetActionOnKeyPressed(actionOnKeyPressed);
+        _haveSetActionToPerform = true;
         return this;
     }
 

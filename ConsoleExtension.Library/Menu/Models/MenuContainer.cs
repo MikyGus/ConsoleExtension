@@ -109,37 +109,29 @@ public class MenuContainer : IMenuContainer
         });
     }
 
-    public IMenuContainerChild GetSelectedChild() => _children[SelectedIndex];
+    public IMenuContainerChild GetSelectedChild() => _children.Any() ? _children[SelectedIndex] : null;
+
     public void RenderSelection(bool showSelection)
     {
         var selectionColor = (IsSelectionSuppressed ? false : showSelection) ? ConsoleColor.Blue : ConsoleColor.Gray;
         BorderRenderer.BorderCorner(Position, AreaNeeded(), selectionColor, 1);
-        GetSelectedChild().RenderSelection(showSelection);
+        GetSelectedChild()?.RenderSelection(showSelection);
     }
 
     public void PerformAction(ConsoleKeyInfo key)
     {
-        if (_actionOnKeyPressed?.Invoke(key, this) ?? _children.Any())
-            _children[SelectedIndex].PerformAction(key);
+        if (_actionOnKeyPressed?.Invoke(key, this) ?? true)
+            if (_children.Any())
+                _children[SelectedIndex].PerformAction(key);
     }
 
-    public void IncrementMoveSelection()
+    public void IncrementMoveSelection(bool fallthrough)
     {
 
         if (_selectedIndex + 1 > _children.Count - 1)
         {
-            //    if (Parent is not null)
-            //    {
-            //        RenderSelection(false);
-            //        GetSelectedChild()?.RenderSelection(false);
-            //        Parent.IncrementSelection();
-            //    }
-            //    else
-            //    {
-            //        GetSelectedChild()?.RenderSelection(false);
-            //        _selectedIndex = _children.Count - 1;
-            //        GetSelectedChild()?.RenderSelection(true);
-            //    }
+            if (fallthrough)
+                Parent?.IncrementMoveSelection(true);
         }
         else
         {
@@ -150,22 +142,12 @@ public class MenuContainer : IMenuContainer
 
     }
 
-    public void DecrementMoveSelection()
+    public void DecrementMoveSelection(bool fallthrough)
     {
         if (_selectedIndex - 1 < 0)
         {
-            //    if (Parent is not null)
-            //    {
-            //        RenderSelection(false);
-            //        GetSelectedChild()?.RenderSelection(false);
-            //        Parent.DecrementSelection();
-            //    }
-            //    else
-            //    {
-            //        GetSelectedChild()?.RenderSelection(false);
-            //        _selectedIndex = 0;
-            //        GetSelectedChild()?.RenderSelection(true);
-            //    }
+            if (fallthrough)
+                Parent?.DecrementMoveSelection(true);
         }
         else
         {

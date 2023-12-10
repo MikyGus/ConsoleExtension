@@ -19,7 +19,7 @@ internal static class MenuLayout
             .AddChild(new MenuContainerItem<int>(4))
             .SelectByValue(3)
             .MarkByValue(4)
-            .SetActionOnKeyPressed(PerformAction.MoveSelectionLeftOrRight)
+            //.SetActionOnKeyPressed(PerformAction.MoveSelectionLeftOrRight)
             .Build();
 
         var nameOfPlayers = new MenuContainerBuilder()
@@ -29,8 +29,8 @@ internal static class MenuLayout
             .AddChild(new MenuContainerItem<string>("Player 2"))
             .AddChild(new MenuContainerItem<string>("Player 3"))
             .AddChild(new MenuContainerItem<string>("Player 4"))
-            .SelectByIndex(2)            
-            .SetActionOnKeyPressed(PerformAction.MoveSelectionLeftOrRight)
+            .SelectByIndex(2)
+            //.SetActionOnKeyPressed(PerformAction.MoveSelectionLeftOrRight)
             .Build();
 
         var playersMenu = new MenuContainerBuilder()
@@ -39,8 +39,7 @@ internal static class MenuLayout
             .AddChild(numberOfPlayers)
             .AddChild(nameOfPlayers)
             .SuppressSelection(true)
-            .SetActionOnKeyPressed(PerformAction.MoveSelectionUpOrDown)
-            //.FallthroughToNextParentChild(true)
+            //.SetActionOnKeyPressed(PerformAction.MoveSelectionUpOrDown)
             .Build();
 
 
@@ -57,10 +56,11 @@ internal static class MenuLayout
                 .AddChild(new MenuContainerItem<Vector2>(new Vector2(5,5)))
                 .SelectByValue(new Vector2(5,5))
                 .MarkByValue(new Vector2(3,3))
-                .SetActionOnKeyPressed(PerformAction.MoveSelectionUpOrDown)
+                //.SetActionOnKeyPressed(PerformAction.MoveSelectionUpOrDown)
                 .Build())
             .Build();
 
+        menu.Position = new Vector2(0, 0);
         menu.Render();
         menu.RenderSelection(true);
 
