@@ -3,6 +3,7 @@
 namespace ConsoleExtension.Library.Menu.Abstract;
 public interface IMenuContainerChild
 {
+    IMenuContainer Parent { get; set; }
     string Title { get; set; }
     Vector2 Position { get; set; }
     bool IsSelected { get; set; }
